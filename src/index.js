@@ -5,21 +5,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const taskList = [];
 
-  // const displayList = () {
-  //    taskUnorderedList.innerHTML = taskList.value.join("");
-  // }
+  const displayList = (input) => {
+      return input.map( taskElement => {
+        return "<li>" + taskElement + "</li>"
+      })
+  }
   
-// const colorsForPriority = {
-//     Highest: "red",
-//     High: "orange",
-//     Medium: "yellow",
-//     Low: "blue",
-//     Lowest: "violet",
-//   };
+     
+  
+  
+  // const colorsForPriority = {
+  //     Highest: "red",
+  //     High: "orange",
+  //     Medium: "yellow",
+  //     Low: "blue",
+  //     Lowest: "violet",
+  //   };
   
   // Variables for items in the DOM 
   const newTaskForm = document.getElementById("create-task-form");
-  const newTaskDetail = document.getElementById("new-task-description");
+  const newTaskDescription = document.getElementById("new-task-description");
   // const newTaskPriority = document.getElementById("new-task-priority");
 
   // Display the task list items. 
@@ -29,9 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   newTaskForm.addEventListener("submit", (event) =>  {
    event.preventDefault();
-   taskList.push(newTaskDetail.value);
+   taskList.push(newTaskDescription.value);
    console.log("submit button event no longer does default action");
    console.log(taskList);
-   taskUnorderedList.innerHTML = taskList.join(", ");
+   taskUnorderedList.innerHTML = displayList(taskList).join(""); // **** Clean this bit to produce a UL format ****
    });
 });
