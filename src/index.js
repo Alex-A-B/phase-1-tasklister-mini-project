@@ -10,10 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return "<li>" + taskElement + "</li>"
       })
   }
-  
      
-  
-  
   // const colorsForPriority = {
   //     Highest: "red",
   //     High: "orange",
@@ -29,6 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Display the task list items. 
   const taskUnorderedList = document.getElementById("tasks"); 
+  const displayApp = () => {
+    return  taskUnorderedList.innerHTML = displayList(taskList).join("");
+  };
 
    // submit form event listener
 
@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
    taskList.push(newTaskDescription.value);
    console.log("submit button event no longer does default action");
    console.log(taskList);
-   taskUnorderedList.innerHTML = displayList(taskList).join(""); // **** Clean this bit to produce a UL format ****
+   event.target.reset(); // QOL update to remove inputs into text box
+   displayApp(); 
    });
 });
