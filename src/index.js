@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const displayList = (input) => {
     return input.map( inputObj => {
       const taskObjHolder = inputObj;
-      const colorPriority = document.getElementById("task").style.color = colorsForPriority.${taskObjHolder.taskPriority};
+      const colorPriority = `document.getElementById("task").style.color = colorsForPriority.${taskObjHolder.taskPriority}`;
       // need to call colorPriority as it should be able to make the color change for me. That's a problem for tomorrows Alex
         return `<li id="task"> ${taskObjHolder.taskName} </li>`; 
     });
