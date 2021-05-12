@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 3. display listDescription in the list DOM
   // 4. stretch challenges/features 
   // feat 1 - reset form after pressing submit - implemented within submit eventListener
-  // feat 2 - dropdown box HTML element - to affect CSS of list WIP
+  // feat 2 - dropdown box HTML priority element - to affect CSS colors of list 
   // feat 3 - complete items marker (checkbox?) - Plan stage
  
   // Variables for items/places in the DOM 
@@ -27,7 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const displayList = (input) => {
     return input.map( inputObj => {
       const taskObjHolder = inputObj;
-        return `<li id="task"> ${taskObjHolder.taskName} </li>`; 
+        return `
+        <li id="task" style="color: ${colorsForPriority[taskObjHolder.taskPriority]}"> 
+        ${taskObjHolder.taskName}
+        </li>
+        `; 
     });
   };
 
@@ -52,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return taskList
   };
 
-    // new features code 
+    // code and thought process to get the list to become colorful.   
 
     // colors priority list thought process
     // create dropdown in HTML file (not sure if needs to be injected via JS or not)
@@ -67,23 +71,31 @@ document.addEventListener("DOMContentLoaded", () => {
       Low: "blue",
       Lowest: "violet",
     };  
+
     // this function injects the CSS and should be on the same .map() as the task list HTML.
     // it isn't working properly as it takes the last NEW priority and assigns it to the first line in the array only.
+    // it only applies on a new taskObject being put in or the last being updated.
+    // Not when the object finds a prior Task in the array. 
     // I think this is due to getElementByID only getting the single element (as ID should be unique in HTML)
     // so the injected ID task is only finding the first item. 
     // tried getElementsByClassName and it threw error.
     // need to work out how to make it run through each line to assign color based on priority.
     
-    const priorityColors = (input) => {
-      return input.map( inputObj => {
-        const taskObjHolder = inputObj;
-          return document.getElementById("task").style.color = colorsForPriority[taskObjHolder.taskPriority];
-      })
-    };
+    // const priorityColors = (input) => {
+    //   return input.map( inputObj => {
+    //     const taskObjHolder = inputObj;
+    //       return document.getElementById("task").style.color = colorsForPriority[taskObjHolder.taskPriority];
+    //   })
+    // };
     
-    const displayColors = () => {
-      return  priorityColors(taskList);
-    };
+    // const displayColors = () => {
+    //   return  priorityColors(taskList);
+    // };
+
+    // **************************************************************************************************
+    // ******* Turns out I should keep things simple by adding the CSS style to the html insert,  *******
+    // ******* it does the same thing, with a lot less code, I am keeping it in as a reminder     *******
+    // **************************************************************************************************
 
    // Event Listeners
 
@@ -100,10 +112,11 @@ document.addEventListener("DOMContentLoaded", () => {
     taskObject(newTaskDescription.value, newTaskPriority.value);
     event.target.reset(); // QOL feature update to remove inputs into text box
     displayApp(); 
-    displayColors();
-    console.log(priorityColors(taskList));
-    console.table(taskList);
-    console.log(document.getElementById("task"));
+    // displayColors();
+    console.log(taskList)
+    // console.log(priorityColors(taskList));
+    // console.log(document.getElementById("task"));
+    // taskList.forEach(() => console.log(document.querySelectorAll("li#task")));
     });
 });
 
