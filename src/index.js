@@ -39,17 +39,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // This function expression creates an object which is pushed to the taskList array.
   // it takes two params, ideally the task description and the task priority from the inputs from the HTML form.
   // it checks if the taskName is a repeat task with an if/else statement
-  // if repeated it should change priority to new priority [NYI - WIP]
+  // if repeated it changes priority to new priority. The priority output had to be an array to allow .splice() to work.
   // else it returns an object which is pushed into the array when the submit eventListener is triggered.
   
-    const taskObject = (description, priority) => {
-      // let repeatTask = taskList.find(task => task.taskName === description)
-      // if(!!repeatTask){
-      //   repeatTask.taskPriority.pop(); // throws error here and won't continue
-      //   repeatTask.taskPriority.push(priority)
-      // } else{
-      taskList.push({taskName: description, taskPriority: priority});
-      // }
+  const taskObject = (description, priority) => {
+    let repeatTask = taskList.find(task => task.taskName === description);
+    if(!!repeatTask){
+      repeatTask.taskPriority.splice(-1, 1, priority);
+    } else {
+      taskList.push({taskName: description, taskPriority: [priority]});
+    }
       return taskList
   };
 
@@ -68,11 +67,17 @@ document.addEventListener("DOMContentLoaded", () => {
       Low: "blue",
       Lowest: "violet",
     };  
-
+    // this function injects the CSS and should be on the same .map() as the task list HTML.
+    // it isn't working properly as it takes the last NEW priority and assigns it to the first line in the array only.
+    // I think this is due to getElementByID only getting the single element (as ID should be unique in HTML)
+    // so the injected ID task is only finding the first item. 
+    // tried getElementsByClassName and it threw error.
+    // need to work out how to make it run through each line to assign color based on priority.
+    
     const priorityColors = (input) => {
       return input.map( inputObj => {
         const taskObjHolder = inputObj;
-         return document.getElementById("task").style.color = colorsForPriority[taskObjHolder.taskPriority];
+          return document.getElementById("task").style.color = colorsForPriority[taskObjHolder.taskPriority];
       })
     };
     
